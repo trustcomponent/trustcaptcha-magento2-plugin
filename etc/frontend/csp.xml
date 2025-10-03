@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<csp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp.xsd">
+    <policies>
+        <policy id="worker-src">
+            <values>
+                <value id="trustcaptcha-worker-self" type="keyword">'self'</value>
+                <value id="trustcaptcha-worker-blob" type="scheme">blob:</value>
+                <value id="trustcaptcha-worker-cdn" type="host">https://cdn.trustcomponent.com</value>
+            </values>
+        </policy>
+        <policy id="child-src">
+            <values>
+                <value id="trustcaptcha-child-self" type="keyword">'self'</value>
+                <value id="trustcaptcha-child-blob" type="scheme">blob:</value>
+                <value id="trustcaptcha-child-cdn" type="host">https://cdn.trustcomponent.com</value>
+            </values>
+        </policy>
+        <policy id="img-src">
+            <values>
+                <value id="trustcaptcha-img-data" type="scheme">data:</value>
+            </values>
+        </policy>
+    </policies>
+</csp>

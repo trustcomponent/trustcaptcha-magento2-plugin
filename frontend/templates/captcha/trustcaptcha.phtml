@@ -1,0 +1,43 @@
+<?php
+/** @var \TrustComponent\TrustCaptcha\Block\Captcha\Trust $block */
+$cfg     = $block->cfg();
+$formId  = (string) $block->getFormId();
+$siteKey = $cfg->getSiteKey();
+if (!$cfg->isEnabled() || !$siteKey) {
+    return;
+}
+?>
+<trustcaptcha-component
+        sitekey="<?= $this->escapeHtmlAttr($siteKey) ?>"
+    <?php if ($cfg->getLicenseKey() !== ''): ?>
+        license="<?= $this->escapeHtmlAttr($cfg->getLicenseKey()) ?>"
+    <?php endif; ?>
+        width="<?= $this->escapeHtmlAttr($cfg->getWidth()) ?>"
+        language="<?= $this->escapeHtmlAttr($cfg->getLanguage()) ?>"
+        theme="<?= $this->escapeHtmlAttr($cfg->getTheme()) ?>"
+        mode="<?= $this->escapeHtmlAttr($cfg->getMode()) ?>"
+        privacy-url="<?= $this->escapeUrl($cfg->getPrivacyUrl()) ?>"
+        invisible-hint="<?= $this->escapeHtmlAttr($cfg->getInvisibleHint()) ?>"
+        <?php if ($cfg->isInvisible()): ?>invisible<?php endif; ?>
+        <?php if ($cfg->isHideBranding()): ?>hide-branding<?php endif; ?>
+        token-field-name="captcha[<?= $this->escapeHtmlAttr($formId) ?>]"
+        <?php if ($cfg->isAutostart() === false): ?>autostart="false"<?php else: ?>autostart<?php endif; ?>
+></trustcaptcha-component>
+<?php
+$customTranslations = $cfg->getCustomTranslations();
+$customDesign       = $cfg->getCustomDesign();
+if ($customTranslations || $customDesign):
+    ?>
+    <script>
+        (function(){
+            var el = document.currentScript.previousElementSibling;
+            if (!el || el.tagName.toLowerCase() !== 'trustcaptcha-component') return;
+            <?php if ($customTranslations): ?>
+            try { el.setAttribute('custom-translations', <?= /* @noEscape */ json_encode($customTranslations, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>); } catch(e){}
+            <?php endif; ?>
+            <?php if ($customDesign): ?>
+            try { el.setAttribute('custom-design', <?= /* @noEscape */ json_encode($customDesign, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>); } catch(e){}
+            <?php endif; ?>
+        })();
+    </script>
+<?php endif; ?>

@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="trustcomponent" translate="label" sortOrder="900">
+            <label>TrustComponent</label>
+        </tab>
+
+        <section id="trustcaptcha" translate="label" type="text"
+                 sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>TrustCaptcha</label>
+            <tab>trustcomponent</tab>
+            <resource>TrustComponent_TrustCaptcha::config</resource>
+
+            <group id="general" translate="label" type="text"
+                   sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+
+                <field id="enabled" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable TrustCaptcha (global)</label>
+                    <comment><![CDATA[
+                        When enabled, TrustCaptcha replaces Magento's CAPTCHA system.
+                    ]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="integration_mode" translate="label" type="select" sortOrder="15"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Integration mode</label>
+                    <comment><![CDATA[
+                        <b>Native CAPTCHA (recommended):</b> Show only when Magento requires a CAPTCHA; TrustCaptcha performs the check.<br/>
+                        <b>Always show:</b> Always inject on selected forms; Magento's native CAPTCHA is disabled automatically.
+                    ]]></comment>
+                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\IntegrationMode</source_model>
+                </field>
+
+                <field id="site_key" translate="label" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Site key (required)</label>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="secret_key" translate="label" type="obscure" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Secret key (required)</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+
+                <field id="license_key" translate="label" type="obscure" sortOrder="35"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>License key (optional)</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+
+                <field id="threshold" translate="label" type="select" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bot score threshold (0.00–1.00)</label>
+                    <comment>At which score a request counts as a bot. Recommended: 0.5 (0 = human, 1 = bot)</comment>
+                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\Threshold</source_model>
+                </field>
+
+                <field id="width" translate="label" type="select" sortOrder="50"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Width</label>
+                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\Width</source_model>
+                </field>
+
+                <field id="language" translate="label" type="select" sortOrder="60"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Language</label>
+                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\Language</source_model>
+                </field>
+
+                <field id="theme" translate="label" type="select" sortOrder="70"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Theme</label>
+                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\Theme</source_model>
+                </field>
+
+                <field id="autostart" translate="label" type="select" sortOrder="80"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Autostart</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="privacy_url" translate="label" type="text" sortOrder="90"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Privacy URL</label>
+                </field>
+
+                <field id="hide_branding" translate="label" type="select" sortOrder="100"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hide branding</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="invisible" translate="label" type="select" sortOrder="110"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Invisible</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="invisible_hint" translate="label" type="select" sortOrder="120"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Invisible hint</label>
+                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\InvisibleHint</source_model>
+                </field>
+
+                <field id="mode" translate="label" type="select" sortOrder="130"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mode</label>
+                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\Mode</source_model>
+                </field>
+
+                <field id="custom_translations" translate="label" type="textarea" sortOrder="140"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom translations (JSON)</label>
+                </field>
+
+                <field id="custom_design" translate="label" type="textarea" sortOrder="150"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom design (JSON)</label>
+                </field>
+            </group>
+
+            <group id="forms" translate="label" type="text"
+                   sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Always Insert Options</label>
+                <comment>Used only when “Integration mode” is set to “Always show”. Magento’s native mode ignores these toggles.</comment>
+
+                <field id="enable_login" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Login</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="trustcaptcha/general/integration_mode">always</field>
+                    </depends>
+                </field>
+
+                <field id="enable_register" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Registration</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="trustcaptcha/general/integration_mode">always</field>
+                    </depends>
+                </field>
+
+                <field id="enable_forgot" translate="label" type="select" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Lost Password</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="trustcaptcha/general/integration_mode">always</field>
+                    </depends>
+                </field>
+
+                <field id="enable_contact" translate="label" type="select" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Contact Form</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="trustcaptcha/general/integration_mode">always</field>
+                    </depends>
+                </field>
+
+                <field id="enable_review" translate="label" type="select" sortOrder="60"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Reviews</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="trustcaptcha/general/integration_mode">always</field>
+                    </depends>
+                </field>
+
+                <field id="enable_sendfriend" translate="label" type="select" sortOrder="70"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email to a Friend</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="trustcaptcha/general/integration_mode">always</field>
+                    </depends>
+                </field>
+
+                <field id="enable_wishlist_share" translate="label" type="select" sortOrder="80"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Share Wishlist</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="trustcaptcha/general/integration_mode">always</field>
+                    </depends>
+                </field>
+
+                <field id="enable_order_lookup" translate="label" type="select" sortOrder="90"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Orders &amp; Returns (Guest)</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="trustcaptcha/general/integration_mode">always</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

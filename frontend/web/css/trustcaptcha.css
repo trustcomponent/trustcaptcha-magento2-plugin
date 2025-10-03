@@ -1,0 +1,20 @@
+trustcaptcha-component {
+    display: block;
+    font-size: 1rem;
+    line-height: normal;
+    min-height: 44px;
+    margin: 12px 0;
+    overflow: visible;
+    border-radius: inherit;
+    background-clip: padding-box;
+}
+
+trustcaptcha-component.tc-scale {
+    transform: scale(var(--tc-scale));
+    transform-origin: top left;
+    width: calc(100% / var(--tc-scale));
+}
+
+@supports not (overflow: clip) {
+    trustcaptcha-component { overflow: visible; }
+}

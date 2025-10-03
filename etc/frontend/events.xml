@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <event name="controller_action_predispatch_customer_account_loginpost">
+        <observer name="trustcaptcha_validate_login"
+                  instance="TrustComponent\TrustCaptcha\Observer\ValidateAction" />
+    </event>
+
+    <event name="controller_action_predispatch_customer_account_createpost">
+        <observer name="trustcaptcha_validate_register"
+                  instance="TrustComponent\TrustCaptcha\Observer\ValidateAction" />
+    </event>
+
+    <event name="controller_action_predispatch_customer_account_forgotpasswordpost">
+        <observer name="trustcaptcha_validate_forgot"
+                  instance="TrustComponent\TrustCaptcha\Observer\ValidateAction" />
+    </event>
+
+    <event name="controller_action_predispatch_contact_index_post">
+        <observer name="trustcaptcha_validate_contact"
+                  instance="TrustComponent\TrustCaptcha\Observer\ValidateAction" />
+    </event>
+
+    <event name="controller_action_predispatch_review_product_post">
+        <observer name="trustcaptcha_validate_review"
+                  instance="TrustComponent\TrustCaptcha\Observer\ValidateAction" />
+    </event>
+
+    <event name="controller_action_predispatch_sendfriend_product_sendmail">
+        <observer name="trustcaptcha_validate_sendfriend"
+                  instance="TrustComponent\TrustCaptcha\Observer\ValidateAction" />
+    </event>
+
+    <event name="controller_action_predispatch_wishlist_index_sharepost">
+        <observer name="trustcaptcha_validate_wishlist_share"
+                  instance="TrustComponent\TrustCaptcha\Observer\ValidateAction" />
+    </event>
+
+    <event name="controller_action_predispatch_sales_guest_formpost">
+        <observer name="trustcaptcha_validate_order_lookup"
+                  instance="TrustComponent\TrustCaptcha\Observer\ValidateAction" />
+    </event>
+</config>

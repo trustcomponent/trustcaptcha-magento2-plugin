@@ -1,0 +1,46 @@
+{
+  "name": "trustcomponent/trustcaptcha-magento2",
+  "description": "TrustCaptcha – Privacy-first CAPTCHA solution for Magento 2. GDPR-compliant, bot protection made in Europe.",
+  "type": "magento2-module",
+  "version": "2.0.0",
+  "keywords": [
+    "captcha",
+    "anti-spam",
+    "spam-protection",
+    "bot-protection",
+    "bot-detection",
+    "user-verification",
+    "magento-2",
+    "privacy",
+    "gdpr",
+    "europe",
+    "trustcaptcha",
+    "captcha-service",
+    "made-in-europe"
+  ],
+  "homepage": "https://www.trustcomponent.com/en/products/captcha/integrations/magento-2-captcha-plugin",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "TrustComponent",
+      "email": "mail@trustcomponent.com",
+      "homepage": "https://www.trustcomponent.com"
+    }
+  ],
+  "support": {
+    "email": "mail@trustcomponent.com"
+  },
+  "require": {
+    "php": ">=8.1",
+    "magento/framework": "^103 || ^104",
+    "trustcomponent/trustcaptcha-php": "^2.0"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "TrustComponent\\\\TrustCaptcha\\\\": ""
+    }
+  }
+}
