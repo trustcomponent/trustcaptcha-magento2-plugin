@@ -1,9 +1,9 @@
 <?php
-namespace TrustComponent\TrustCaptcha\Plugin\Helper;
+namespace TrustComponent\TrustCaptchaMagento2\Plugin\Helper;
 
 use Magento\Captcha\Helper\Data as CaptchaHelper;
 use Magento\Framework\ObjectManagerInterface;
-use TrustComponent\TrustCaptcha\Model\Config;
+use TrustComponent\TrustCaptchaMagento2\Model\Config;
 
 class CaptchaDataPlugin
 {
@@ -21,7 +21,7 @@ class CaptchaDataPlugin
         }
         if (!isset($this->instances[$formId])) {
             $this->instances[$formId] = $this->objectManager->create(
-                \TrustComponent\TrustCaptcha\Model\Captcha\Trustcaptcha::class,
+                \TrustComponent\TrustCaptchaMagento2\Model\Captcha\Trustcaptcha::class,
                 ['formId' => $formId]
             );
         }

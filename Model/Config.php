@@ -1,5 +1,5 @@
 <?php
-namespace TrustComponent\TrustCaptcha\Model;
+namespace TrustComponent\TrustCaptchaMagento2\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Encryption\EncryptorInterface;

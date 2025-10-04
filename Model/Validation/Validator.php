@@ -1,8 +1,8 @@
 <?php
-namespace TrustComponent\TrustCaptcha\Model\Validation;
+namespace TrustComponent\TrustCaptchaMagento2\Model\Validation;
 
 use Psr\Log\LoggerInterface;
-use TrustComponent\TrustCaptcha\Model\Config;
+use TrustComponent\TrustCaptchaMagento2\Model\Config;
 
 class Validator
 {
@@ -18,7 +18,7 @@ class Validator
         }
 
         if (!$token) {
-            return ['ok' => false, 'botScore' => null, 'explicitFail' => true, 'message' => 'Please solve the CAPTCHA completely.'];
+            return ['ok' => false, 'botScore' => null, 'explicitFail' => true, 'message' => 'Please complete the CAPTCHA.'];
         }
 
         $secret = $this->cfg->getSecretKey();

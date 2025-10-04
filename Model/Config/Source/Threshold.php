@@ -1,5 +1,5 @@
 <?php
-namespace TrustComponent\TrustCaptcha\Model\Config\Source;
+namespace TrustComponent\TrustCaptchaMagento2\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
 

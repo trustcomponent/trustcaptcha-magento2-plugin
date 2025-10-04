@@ -3,11 +3,11 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <type name="Magento\Captcha\Helper\Data">
         <plugin name="trustcaptcha-helper-data"
-                type="TrustComponent\TrustCaptcha\Plugin\Helper\CaptchaDataPlugin"/>
+                type="TrustComponent\TrustCaptchaMagento2\Plugin\Helper\CaptchaDataPlugin"/>
     </type>
     <type name="Magento\Framework\Message\Manager">
         <plugin name="trustcaptcha-captcha-message"
-                type="TrustComponent\TrustCaptcha\Plugin\Message\CaptchaErrorMessagePlugin"
+                type="TrustComponent\TrustCaptchaMagento2\Plugin\Message\CaptchaErrorMessagePlugin"
                 sortOrder="10"/>
     </type>
 </config>

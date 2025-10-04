@@ -1,5 +1,5 @@
 <?php
-namespace TrustComponent\TrustCaptcha\Model\Captcha;
+namespace TrustComponent\TrustCaptchaMagento2\Model\Captcha;
 
 use Magento\Captcha\Model\CaptchaInterface;
 use Magento\Captcha\Helper\Data as CaptchaHelper;
@@ -7,8 +7,8 @@ use Magento\Captcha\Model\ResourceModel\LogFactory as ResLogFactory;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Magento\Framework\Session\SessionManagerInterface;
-use TrustComponent\TrustCaptcha\Model\Validation\Validator;
-use TrustComponent\TrustCaptcha\Model\Config;
+use TrustComponent\TrustCaptchaMagento2\Model\Validation\Validator;
+use TrustComponent\TrustCaptchaMagento2\Model\Config;
 
 class Trustcaptcha implements CaptchaInterface
 {
@@ -47,7 +47,7 @@ class Trustcaptcha implements CaptchaInterface
 
     public function getBlockName()
     {
-        return \TrustComponent\TrustCaptcha\Block\Captcha\Trust::class;
+        return \TrustComponent\TrustCaptchaMagento2\Block\Captcha\Trust::class;
     }
 
     public function generate()

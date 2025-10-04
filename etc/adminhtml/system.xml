@@ -32,7 +32,7 @@
                         <b>Native CAPTCHA (recommended):</b> Show only when Magento requires a CAPTCHA; TrustCaptcha performs the check.<br/>
                         <b>Always show:</b> Always inject on selected forms; Magento's native CAPTCHA is disabled automatically.
                     ]]></comment>
-                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\IntegrationMode</source_model>
+                    <source_model>TrustComponent\TrustCaptchaMagento2\Model\Config\Source\IntegrationMode</source_model>
                 </field>
 
                 <field id="site_key" translate="label" type="text" sortOrder="20"
@@ -57,25 +57,25 @@
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Bot score threshold (0.00–1.00)</label>
                     <comment>At which score a request counts as a bot. Recommended: 0.5 (0 = human, 1 = bot)</comment>
-                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\Threshold</source_model>
+                    <source_model>TrustComponent\TrustCaptchaMagento2\Model\Config\Source\Threshold</source_model>
                 </field>
 
                 <field id="width" translate="label" type="select" sortOrder="50"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Width</label>
-                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\Width</source_model>
+                    <source_model>TrustComponent\TrustCaptchaMagento2\Model\Config\Source\Width</source_model>
                 </field>
 
                 <field id="language" translate="label" type="select" sortOrder="60"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Language</label>
-                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\Language</source_model>
+                    <source_model>TrustComponent\TrustCaptchaMagento2\Model\Config\Source\Language</source_model>
                 </field>
 
                 <field id="theme" translate="label" type="select" sortOrder="70"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Theme</label>
-                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\Theme</source_model>
+                    <source_model>TrustComponent\TrustCaptchaMagento2\Model\Config\Source\Theme</source_model>
                 </field>
 
                 <field id="autostart" translate="label" type="select" sortOrder="80"
@@ -104,13 +104,13 @@
                 <field id="invisible_hint" translate="label" type="select" sortOrder="120"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Invisible hint</label>
-                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\InvisibleHint</source_model>
+                    <source_model>TrustComponent\TrustCaptchaMagento2\Model\Config\Source\InvisibleHint</source_model>
                 </field>
 
                 <field id="mode" translate="label" type="select" sortOrder="130"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Mode</label>
-                    <source_model>TrustComponent\TrustCaptcha\Model\Config\Source\Mode</source_model>
+                    <source_model>TrustComponent\TrustCaptchaMagento2\Model\Config\Source\Mode</source_model>
                 </field>
 
                 <field id="custom_translations" translate="label" type="textarea" sortOrder="140"

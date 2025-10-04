@@ -1,8 +1,8 @@
 <?php
-namespace TrustComponent\TrustCaptcha\Block\Captcha;
+namespace TrustComponent\TrustCaptchaMagento2\Block\Captcha;
 
 use Magento\Captcha\Block\Captcha\DefaultCaptcha as MagentoDefaultCaptcha;
-use TrustComponent\TrustCaptcha\Model\Config;
+use TrustComponent\TrustCaptchaMagento2\Model\Config;
 
 class Trust extends MagentoDefaultCaptcha
 {

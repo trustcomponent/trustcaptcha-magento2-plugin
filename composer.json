@@ -2,7 +2,7 @@
   "name": "trustcomponent/trustcaptcha-magento2",
   "description": "TrustCaptcha – Privacy-first CAPTCHA solution for Magento 2. GDPR-compliant, bot protection made in Europe.",
   "type": "magento2-module",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "keywords": [
     "captcha",
     "anti-spam",
@@ -40,7 +40,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "TrustComponent\\\\TrustCaptcha\\\\": ""
+      "TrustComponent\\\\TrustCaptchaMagento2\\\\": ""
     }
   }
 }

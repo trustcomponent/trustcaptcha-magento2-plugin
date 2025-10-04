@@ -7,7 +7,7 @@
     </head>
     <body>
         <referenceContainer name="before.body.end">
-            <block class="TrustComponent\TrustCaptcha\Block\Config"
+            <block class="TrustComponent\TrustCaptchaMagento2\Block\Config"
                    name="trustcaptcha.config"
                    template="TrustComponent_TrustCaptcha::trustcaptcha.phtml"/>
         </referenceContainer>

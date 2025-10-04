@@ -1,5 +1,5 @@
 <?php
-namespace TrustComponent\TrustCaptcha\Observer;
+namespace TrustComponent\TrustCaptchaMagento2\Observer;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\ActionFlag;
@@ -9,8 +9,8 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\UrlInterface;
-use TrustComponent\TrustCaptcha\Model\Config;
-use TrustComponent\TrustCaptcha\Model\Validation\Validator;
+use TrustComponent\TrustCaptchaMagento2\Model\Config;
+use TrustComponent\TrustCaptchaMagento2\Model\Validation\Validator;
 
 class ValidateAction implements ObserverInterface
 {

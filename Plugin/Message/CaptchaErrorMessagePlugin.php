@@ -1,5 +1,5 @@
 <?php
-namespace TrustComponent\TrustCaptcha\Plugin\Message;
+namespace TrustComponent\TrustCaptchaMagento2\Plugin\Message;
 
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Message\Manager;
@@ -39,7 +39,7 @@ class CaptchaErrorMessagePlugin
 
         $type = $flag['type'] ?? 'uncertain';
         if ($type === 'missing') {
-            return [__('Please complete the CAPTCHA completely.')];
+            return [__('Please complete the CAPTCHA.')];
         }
 
         return [__('We could not confirm you are human. Please try again later.')];

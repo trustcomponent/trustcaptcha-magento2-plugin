@@ -1,8 +1,8 @@
 <?php
-namespace TrustComponent\TrustCaptcha\Block;
+namespace TrustComponent\TrustCaptchaMagento2\Block;
 
 use Magento\Framework\View\Element\Template;
-use TrustComponent\TrustCaptcha\Model\Config as Cfg;
+use TrustComponent\TrustCaptchaMagento2\Model\Config as Cfg;
 
 class Config extends Template
 {
