@@ -7,7 +7,7 @@
                 <resource id="Magento_Backend::stores" title="Stores" translate="title" sortOrder="80">
                     <resource id="Magento_Backend::stores_settings" title="Settings" translate="title" sortOrder="10">
                         <resource id="Magento_Config::config" title="Configuration" translate="title" sortOrder="10">
-                            <resource id="TrustComponent_TrustCaptcha::config"
+                            <resource id="TrustComponent_TrustCaptchaMagento2::config"
                                       title="TrustCaptcha Configuration"
                                       sortOrder="900"/>
                         </resource>

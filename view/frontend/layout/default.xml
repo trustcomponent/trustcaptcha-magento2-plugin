@@ -2,14 +2,14 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <script src="TrustComponent_TrustCaptcha::js/trustcaptcha-init.js"/>
-        <css src="TrustComponent_TrustCaptcha::css/trustcaptcha.css"/>
+        <script src="TrustComponent_TrustCaptchaMagento2::js/trustcaptcha-init.js"/>
+        <css src="TrustComponent_TrustCaptchaMagento2::css/trustcaptcha.css"/>
     </head>
     <body>
         <referenceContainer name="before.body.end">
             <block class="TrustComponent\TrustCaptchaMagento2\Block\Config"
                    name="trustcaptcha.config"
-                   template="TrustComponent_TrustCaptcha::trustcaptcha.phtml"/>
+                   template="TrustComponent_TrustCaptchaMagento2::trustcaptcha.phtml"/>
         </referenceContainer>
     </body>
 </page>
