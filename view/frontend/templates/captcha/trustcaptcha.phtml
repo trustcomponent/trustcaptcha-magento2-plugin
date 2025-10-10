@@ -22,6 +22,7 @@ if (!$cfg->isEnabled() || !$siteKey) {
         <?php if ($cfg->isHideBranding()): ?>hide-branding<?php endif; ?>
         token-field-name="captcha[<?= $this->escapeHtmlAttr($formId) ?>]"
         <?php if ($cfg->isAutostart() === false): ?>autostart="false"<?php else: ?>autostart<?php endif; ?>
+        framework="magento2"
 ></trustcaptcha-component>
 <?php
 $customTranslations = $cfg->getCustomTranslations();

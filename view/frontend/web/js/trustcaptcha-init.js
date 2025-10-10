@@ -79,6 +79,7 @@
         attr(el, 'privacy-url', cfg.privacyUrl);
         attr(el, 'mode', cfg.mode);
         attr(el, 'invisible-hint', cfg.invisibleHint);
+        attr(el, 'framework', 'magento2');
         if (cfg.autostart === false) attr(el, 'autostart', 'false');
         else if (cfg.autostart === true) attr(el, 'autostart', true);
         if (cfg.hideBranding) attr(el, 'hide-branding', true);
