@@ -1,11 +1,23 @@
 (function () {
     var TAG_NAME = 'trustcaptcha-component';
     var TOKEN_INPUT_NAME = 'tc-verification-token';
-    var WIDGET_SCRIPT_URL = 'https://cdn.trustcomponent.com/trustcaptcha/2.0.x/trustcaptcha.umd.min.js';
+    var WIDGET_SCRIPT_URL = 'https://cdn.trustcomponent.com/trustcaptcha/2.1.x/trustcaptcha.umd.min.js';
+    var WIDGET_AMD_MODULE = 'trustcaptcha-umd';
 
-    function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
-    function onPageShow(fn) { window.addEventListener('pageshow', fn); }
-    function attr(el, n, v) { if (v === undefined || v === null || v === '') return; if (v === true) { el.setAttribute(n, ''); return; } el.setAttribute(n, String(v)); }
+    function ready(fn) {
+        if (document.readyState !== 'loading') fn();
+        else document.addEventListener('DOMContentLoaded', fn);
+    }
+
+    function onPageShow(fn) {
+        window.addEventListener('pageshow', fn);
+    }
+
+    function attr(el, n, v) {
+        if (v === undefined || v === null || v === '') return;
+        if (v === true) { el.setAttribute(n, ''); return; }
+        el.setAttribute(n, String(v));
+    }
 
     function patchShadow(el) {
         try {
@@ -65,7 +77,12 @@
         var last = form.querySelector('.field:last-child, fieldset:last-child'); if (last) return { node: last, place: 'after' };
         return { node: form, place: 'append' };
     }
-    function insertAfter(node, newEl) { if (!node || !node.parentNode) return; if (node.nextSibling) node.parentNode.insertBefore(newEl, node.nextSibling); else node.parentNode.appendChild(newEl); }
+
+    function insertAfter(node, newEl) {
+        if (!node || !node.parentNode) return;
+        if (node.nextSibling) node.parentNode.insertBefore(newEl, node.nextSibling);
+        else node.parentNode.appendChild(newEl);
+    }
 
     function insertWidgetIntoForm(form, cfg) {
         if (!form || form.querySelector(TAG_NAME)) return false;
@@ -106,21 +123,6 @@
             document.querySelector(selectorList.replace(/forgotpasswordpost/gi, 'forgotPasswordPost')) ||
             document.querySelector(selectorList.replace(/loginpost/gi, 'loginPost'));
         return insertWidgetIntoForm(form, cfg);
-    }
-
-    function loadScriptOnce(src, done) {
-        if (!src) { done && done(); return; }
-        var already = document.querySelector('script[data-trustcaptcha="1"]');
-        if (already) { done && done(); return; }
-        var hadAMD = typeof window.define === 'function' && window.define.amd;
-        var oldDefine = window.define;
-        if (hadAMD) { try { window.define = undefined; } catch (e) {} }
-        var s = document.createElement('script');
-        s.src = src; s.async = false; s.defer = false;
-        s.setAttribute('data-trustcaptcha', '1');
-        s.onload = function () { if (hadAMD) window.define = oldDefine; done && done(); };
-        s.onerror = function () { if (hadAMD) window.define = oldDefine; done && done(); };
-        document.head.appendChild(s);
     }
 
     function initOnDom(cfg) {
@@ -170,11 +172,55 @@
         });
     }
 
+    function loadWidget(done) {
+        try {
+            if (window.customElements && window.customElements.get && window.customElements.get(TAG_NAME)) {
+                done && done();
+                return;
+            }
+        } catch (e) {}
+
+        var req = window.requirejs || window.require;
+        if (typeof req === 'function') {
+            try {
+                req(
+                    [WIDGET_AMD_MODULE],
+                    function () { done && done(); },
+                    function () {
+                        loadScriptOnce(WIDGET_SCRIPT_URL, done);
+                    }
+                );
+                return;
+            } catch (e) {}
+        }
+
+        loadScriptOnce(WIDGET_SCRIPT_URL, done);
+    }
+
+    function loadScriptOnce(src, done) {
+        if (!src) { done && done(); return; }
+
+        var already = document.querySelector('script[data-trustcaptcha="1"]');
+        if (already) { done && done(); return; }
+
+        var s = document.createElement('script');
+        s.src = src;
+        s.async = true;
+        s.defer = true;
+
+        s.setAttribute('data-trustcaptcha', '1');
+
+        s.onload = function () { done && done(); };
+        s.onerror = function () { done && done(); };
+
+        document.head.appendChild(s);
+    }
+
     function boot() {
         var cfg = (window.trustCaptchaConfig || {});
         if (!cfg.enabled || !cfg.siteKey) return;
 
-        loadScriptOnce(WIDGET_SCRIPT_URL, function () {
+        loadWidget(function () {
             initExisting();
             normalizeAllExistingLater();
             initOnDom(cfg);

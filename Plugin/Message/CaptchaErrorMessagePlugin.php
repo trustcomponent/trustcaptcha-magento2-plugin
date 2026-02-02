@@ -42,6 +42,11 @@ class CaptchaErrorMessagePlugin
             return [__('Please complete the CAPTCHA.')];
         }
 
+        $raw = (string) ($flag['message'] ?? '');
+        if ($raw !== '' && in_array($raw, ['Server not configured', 'SDK missing', 'Validation error'], true)) {
+            return [__($raw)];
+        }
+
         return [__('We could not confirm you are human. Please try again later.')];
     }
 }

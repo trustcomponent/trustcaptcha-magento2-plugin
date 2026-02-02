@@ -69,12 +69,42 @@ class Trustcaptcha implements CaptchaInterface
 
     public function isCorrect($word)
     {
-        $token = is_string($word) ? $word : '';
-        if ($token === '') {
+        $token = '';
+        if (is_string($word)) {
+            $token = $word;
+        } elseif (is_array($word)) {
+            $v = null;
+            if ($this->formId !== '' && isset($word[$this->formId]) && is_string($word[$this->formId])) {
+                $v = $word[$this->formId];
+            } else {
+                foreach ($word as $x) {
+                    if (is_string($x) && $x !== '') { $v = $x; break; }
+                }
+            }
+            if (is_string($v)) { $token = $v; }
+        }
+
+        if ($token === '' || strtolower($token) === 'array') {
+            $captcha = $this->request->getParam('captcha');
+            if (is_array($captcha)) {
+                $v = null;
+                if ($this->formId !== '' && isset($captcha[$this->formId]) && is_string($captcha[$this->formId])) {
+                    $v = $captcha[$this->formId];
+                } else {
+                    foreach ($captcha as $x) {
+                        if (is_string($x) && $x !== '') { $v = $x; break; }
+                    }
+                }
+                if (is_string($v)) { $token = $v; }
+            }
+        }
+
+        if ($token === '' || strtolower($token) === 'array') {
             $token = (string) (
             $this->request->getParam('tc-verification-token')
+                ?: $this->request->getParam('trustcaptcha_token')
                 ?: $this->request->getParam('verificationToken')
-                ?: $this->request->getParam('verification_token')
+                    ?: $this->request->getParam('verification_token')
             );
         }
 
@@ -86,6 +116,7 @@ class Trustcaptcha implements CaptchaInterface
         if (!$ok) {
             $this->session->setData('trustcaptcha_override', [
                 'type' => $missing ? 'missing' : 'uncertain',
+                'message' => (string) ($res['message'] ?? ''),
             ]);
         }
 

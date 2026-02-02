@@ -30,29 +30,15 @@ class Validator
         try {
             $threshold = (float) $this->cfg->getThreshold();
 
-            $pick = static function ($source, array $keys) {
-                foreach ($keys as $k) {
-                    if (is_array($source) && array_key_exists($k, $source)) {
-                        return $source[$k];
-                    }
-                    if (is_object($source) && isset($source->$k)) {
-                        return $source->$k;
-                    }
-                }
-                return null;
-            };
-
             if (class_exists('\\TrustComponent\\TrustCaptcha\\CaptchaManager')
                 && method_exists('\\TrustComponent\\TrustCaptcha\\CaptchaManager', 'getVerificationResult')) {
-                /** @var \TrustComponent\TrustCaptcha\CaptchaManager $cm */
-                $cm = new \TrustComponent\TrustCaptcha\CaptchaManager();
-                $result = $cm->getVerificationResult($secret, $token);
+                $result = \TrustComponent\TrustCaptcha\CaptchaManager::getVerificationResult($secret, $token);
 
-                $botScore     = (float) ($pick($result, ['score', 'botScore']) ?? 0.0);
-                $explicitPass = (bool) ($pick($result, ['verificationPassed', 'explicitVerificationPass']) ?? true);
-                $reason       = (string) ($pick($result, ['reason', 'message']) ?? '');
+                $botScore     = isset($result->score) ? (float) $result->score : 0.0;
+                $explicitPass = isset($result->verificationPassed) ? (bool) $result->verificationPassed : false;
+                $reason       = isset($result->reason) ? (string) $result->reason : '';
 
-                $ok = $explicitPass && ($botScore < $threshold);
+                $ok = $explicitPass && ($botScore <= $threshold);
 
                 if (!$ok) {
                     $this->logger->info('TrustCaptcha validation not passed', [
@@ -68,37 +54,6 @@ class Validator
                     'botScore' => $botScore,
                     'explicitFail' => !$explicitPass,
                     'message' => $ok ? 'ok' : 'We could not confirm you are human. Please try again later.',
-                ];
-            }
-
-            if (class_exists('\\TrustComponent\\TrustCaptcha\\Client')) {
-                /** @var \TrustComponent\TrustCaptcha\Client $client */
-                $client = new \TrustComponent\TrustCaptcha\Client($secret);
-                $result = $client->verify($token, [
-                    'remoteIp' => $remoteIp,
-                    'siteKey'  => $this->cfg->getSiteKey()
-                ]);
-
-                $botScore     = (float) ($pick($result, ['botScore', 'score']) ?? 0.0);
-                $explicitPass = (bool) ($pick($result, ['explicitVerificationPass', 'verificationPassed']) ?? true);
-                $reason       = (string) ($pick($result, ['reason', 'message']) ?? '');
-
-                $ok = $explicitPass && ($botScore < $threshold);
-
-                if (!$ok) {
-                    $this->logger->info('TrustCaptcha validation not passed', [
-                        'score' => $botScore,
-                        'explicitPass' => $explicitPass,
-                        'threshold' => $threshold,
-                        'reason' => $reason,
-                    ]);
-                }
-
-                return [
-                    'ok' => $ok,
-                    'botScore' => $botScore,
-                    'explicitFail' => !$explicitPass,
-                    'message' => $ok ? 'ok' : ($reason !== '' ? $reason : 'score too high or explicit check failed'),
                 ];
             }
 
