@@ -18,19 +18,19 @@ Read the full [TrustCaptcha product overview](https://www.trustcomponent.com/en/
 
 ## Get started
 
-1. **Create an account:** [sign up / sign in](https://id.trustcomponent.com/en/signup).
+1. **Create an account:** [sign up / sign in](https://id.trustcomponent.com/signup).
 2. **Choose a CAPTCHA:** pick an existing one or create a new one.
 3. **Install the Plugin:** install the TrustCaptcha plugin in your Magento 2 instance.
 4. **Configure TrustCaptcha:** Configure TrustCaptcha for your various Magento 2 flows.
 
-Need a walkthrough? See the [Magento 2 integration guide](https://www.trustcomponent.com/en/products/captcha/integrations/magento-2-captcha-plugin).
+Need a walkthrough? See the [Magento 2 integration guide](https://www.trustcomponent.com/en/products/captcha/integrations/magento-2-captcha-extension).
 
 
 ## Basic Magento 2 integration
 
 Install the TrustCaptcha Magento 2 plugin via the Plugin store or using composer.
 
-**For detailed implementation instructions, [read the Magento 2 integration guide](https://www.trustcomponent.com/en/products/captcha/integrations/magento-2-captcha-plugin).**
+**For detailed implementation instructions, [read the Magento 2 integration guide](https://www.trustcomponent.com/en/products/captcha/integrations/magento-2-captcha-extension).**
 
 
 ## Other pre-built integrations
