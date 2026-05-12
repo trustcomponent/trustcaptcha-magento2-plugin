@@ -29,6 +29,7 @@
                 <mode>standard</mode>
                 <custom_translations></custom_translations>
                 <custom_design></custom_design>
+                <failover_enabled>0</failover_enabled>
             </general>
             <forms>
                 <enable_login>1</enable_login>

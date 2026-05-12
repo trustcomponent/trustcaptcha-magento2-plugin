@@ -44,6 +44,7 @@ class Config extends Template
             'mode'               => $this->cfg->getMode(),
             'customTranslations' => $this->cfg->getCustomTranslations(),
             'customDesign'       => $this->cfg->getCustomDesign(),
+            'failoverEnabled'    => $this->cfg->isFailoverEnabled(),
         ];
         return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }

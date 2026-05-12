@@ -1,8 +1,18 @@
 (function () {
     var TAG_NAME = 'trustcaptcha-component';
     var TOKEN_INPUT_NAME = 'tc-verification-token';
-    var WIDGET_SCRIPT_URL = 'https://cdn.trustcomponent.com/trustcaptcha/2.1.x/trustcaptcha.umd.min.js';
     var WIDGET_AMD_MODULE = 'trustcaptcha-umd';
+    function resolveWidgetScriptUrl() {
+        try {
+            var req = window.require || window.requirejs;
+            if (req && typeof req.toUrl === 'function') {
+                var u = req.toUrl(WIDGET_AMD_MODULE);
+                if (u && !/\.js(\?|$)/.test(u)) u += '.js';
+                return u;
+            }
+        } catch (e) {}
+        return null;
+    }
 
     function ready(fn) {
         if (document.readyState !== 'loading') fn();
@@ -89,20 +99,20 @@
         var el = document.createElement(TAG_NAME);
 
         attr(el, 'sitekey', cfg.siteKey);
-        attr(el, 'license', cfg.licenseKey);
-        attr(el, 'width', cfg.width);
+        if (cfg.licenseKey) attr(el, 'license-key', cfg.licenseKey);
+        if (cfg.width === 'full') attr(el, 'full-width', 'true');
         attr(el, 'language', cfg.language);
         attr(el, 'theme', cfg.theme);
-        attr(el, 'privacy-url', cfg.privacyUrl);
-        attr(el, 'mode', cfg.mode);
-        attr(el, 'invisible-hint', cfg.invisibleHint);
+        if (cfg.privacyUrl) attr(el, 'privacy-url', cfg.privacyUrl);
+        if (cfg.mode === 'minimal') attr(el, 'minimal-data-mode', 'true');
+        if (cfg.invisibleHint) attr(el, 'invisible-hint', cfg.invisibleHint);
         attr(el, 'framework', 'magento2');
-        if (cfg.autostart === false) attr(el, 'autostart', 'false');
-        else if (cfg.autostart === true) attr(el, 'autostart', true);
-        if (cfg.hideBranding) attr(el, 'hide-branding', true);
-        if (cfg.invisible) attr(el, 'invisible', true);
-        if (cfg.customTranslations) { try { attr(el, 'custom-translations', JSON.stringify(cfg.customTranslations)); } catch (e) {} }
-        if (cfg.customDesign) { try { attr(el, 'custom-design', JSON.stringify(cfg.customDesign)); } catch (e) {} }
+        if (cfg.autostart === false) attr(el, 'autostart-disabled', 'true');
+        if (cfg.hideBranding) attr(el, 'white-label', 'true');
+        if (cfg.invisible) attr(el, 'invisible', 'true');
+        if (cfg.failoverEnabled) attr(el, 'failover-enabled', 'true');
+        if (cfg.customTranslations) { try { attr(el, 'translations', JSON.stringify(cfg.customTranslations)); } catch (e) {} }
+        if (cfg.customDesign) { try { attr(el, 'design', JSON.stringify(cfg.customDesign)); } catch (e) {} }
         if (TOKEN_INPUT_NAME) attr(el, 'token-field-name', TOKEN_INPUT_NAME);
 
         scaleTo16px(el);
@@ -187,14 +197,14 @@
                     [WIDGET_AMD_MODULE],
                     function () { done && done(); },
                     function () {
-                        loadScriptOnce(WIDGET_SCRIPT_URL, done);
+                        loadScriptOnce(resolveWidgetScriptUrl(), done);
                     }
                 );
                 return;
             } catch (e) {}
         }
 
-        loadScriptOnce(WIDGET_SCRIPT_URL, done);
+        loadScriptOnce(resolveWidgetScriptUrl(), done);
     }
 
     function loadScriptOnce(src, done) {

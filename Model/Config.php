@@ -59,7 +59,13 @@ class Config
         return $raw;
     }
 
-    public function getThreshold(): string { return $this->get(self::PATH . 'general/threshold') ?: '0.5'; }
+    public function getThreshold(): string
+    {
+        $stored = (float) ($this->get(self::PATH . 'general/threshold') ?: '0.5');
+        $clamped = max(0.2, $stored);
+        return number_format($clamped, 2, '.', '');
+    }
+    public function isFailoverEnabled(): bool { return (bool) $this->get(self::PATH . 'general/failover_enabled'); }
     public function getWidth(): string { return $this->get(self::PATH . 'general/width') ?: 'full'; }
     public function getLanguage(): string { return $this->get(self::PATH . 'general/language') ?: 'auto'; }
     public function getTheme(): string { return $this->get(self::PATH . 'general/theme') ?: 'light'; }

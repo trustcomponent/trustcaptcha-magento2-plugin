@@ -2,6 +2,10 @@
 namespace TrustComponent\TrustCaptchaMagento2\Model\Validation;
 
 use Psr\Log\LoggerInterface;
+use TrustComponent\TrustCaptcha\TrustCaptcha;
+use TrustComponent\TrustCaptcha\ApiKeyInvalidException;
+use TrustComponent\TrustCaptcha\ServerUnreachableException;
+use TrustComponent\TrustCaptcha\ClientReportedServerUnreachableException;
 use TrustComponent\TrustCaptchaMagento2\Model\Config;
 
 class Validator
@@ -21,44 +25,57 @@ class Validator
             return ['ok' => false, 'botScore' => null, 'explicitFail' => true, 'message' => 'Please complete the CAPTCHA.'];
         }
 
-        $secret = $this->cfg->getSecretKey();
-        if (!$secret) {
-            $this->logger->warning('TrustCaptcha: Secret key not configured.');
+        $apiKey = $this->cfg->getSecretKey();
+        if (!$apiKey) {
+            $this->logger->warning('TrustCaptcha: API key not configured.');
             return ['ok' => false, 'botScore' => null, 'explicitFail' => true, 'message' => 'Server not configured'];
         }
 
+        if (!class_exists(TrustCaptcha::class)) {
+            $this->logger->error('TrustCaptcha PHP SDK not available. Install trustcomponent/trustcaptcha-php:^3.0.');
+            return ['ok' => false, 'botScore' => null, 'explicitFail' => null, 'message' => 'SDK missing'];
+        }
+
+        $threshold = (float) $this->cfg->getThreshold();
+        $failoverEnabled = $this->cfg->isFailoverEnabled();
+
         try {
-            $threshold = (float) $this->cfg->getThreshold();
+            $trustCaptcha = new TrustCaptcha($apiKey);
+            $result = $trustCaptcha->getVerificationResult($token);
 
-            if (class_exists('\\TrustComponent\\TrustCaptcha\\CaptchaManager')
-                && method_exists('\\TrustComponent\\TrustCaptcha\\CaptchaManager', 'getVerificationResult')) {
-                $result = \TrustComponent\TrustCaptcha\CaptchaManager::getVerificationResult($secret, $token);
+            $botScore     = isset($result->score) ? (float) $result->score : 0.0;
+            $explicitPass = isset($result->verificationPassed) ? (bool) $result->verificationPassed : false;
 
-                $botScore     = isset($result->score) ? (float) $result->score : 0.0;
-                $explicitPass = isset($result->verificationPassed) ? (bool) $result->verificationPassed : false;
-                $reason       = isset($result->reason) ? (string) $result->reason : '';
+            $ok = $explicitPass && ($botScore <= $threshold);
 
-                $ok = $explicitPass && ($botScore <= $threshold);
-
-                if (!$ok) {
-                    $this->logger->info('TrustCaptcha validation not passed', [
-                        'score' => $botScore,
-                        'explicitPass' => $explicitPass,
-                        'threshold' => $threshold,
-                        'reason' => $reason,
-                    ]);
-                }
-
-                return [
-                    'ok' => $ok,
-                    'botScore' => $botScore,
-                    'explicitFail' => !$explicitPass,
-                    'message' => $ok ? 'ok' : 'We could not confirm you are human. Please try again later.',
-                ];
+            if (!$ok) {
+                $this->logger->info('TrustCaptcha validation not passed', [
+                    'score' => $botScore,
+                    'explicitPass' => $explicitPass,
+                    'threshold' => $threshold,
+                ]);
             }
 
-            $this->logger->error('TrustCaptcha PHP SDK not available. Install trustcomponent/trustcaptcha-php.');
-            return ['ok' => false, 'botScore' => null, 'explicitFail' => null, 'message' => 'SDK missing'];
+            return [
+                'ok' => $ok,
+                'botScore' => $botScore,
+                'explicitFail' => !$explicitPass,
+                'message' => $ok ? 'ok' : 'We could not confirm you are human. Please try again later.',
+            ];
+        } catch (ServerUnreachableException $e) {
+            if ($failoverEnabled) {
+                $this->logger->warning('TrustCaptcha: API unreachable from server — allowed via failover. ' . $e->getMessage());
+                return ['ok' => true, 'botScore' => null, 'explicitFail' => false, 'message' => 'failover'];
+            }
+            $this->logger->error('TrustCaptcha: API unreachable from server, failover disabled. ' . $e->getMessage());
+            return ['ok' => false, 'botScore' => null, 'explicitFail' => null, 'message' => 'CAPTCHA verification failed because our servers were not reachable. Please try again in a moment.'];
+        } catch (ClientReportedServerUnreachableException $e) {
+            // Always reject client-reported failover.
+            $this->logger->warning('TrustCaptcha: Client reported failover but our API is reachable — blocked. ' . $e->getMessage());
+            return ['ok' => false, 'botScore' => null, 'explicitFail' => null, 'message' => 'CAPTCHA verification could not be confirmed. Please try again.'];
+        } catch (ApiKeyInvalidException $e) {
+            $this->logger->error('TrustCaptcha: API key invalid. ' . $e->getMessage());
+            return ['ok' => false, 'botScore' => null, 'explicitFail' => null, 'message' => 'Configuration error'];
         } catch (\Throwable $e) {
             $this->logger->error('TrustCaptcha validation failed', ['exception' => $e]);
             return ['ok' => false, 'botScore' => null, 'explicitFail' => null, 'message' => 'Validation error'];

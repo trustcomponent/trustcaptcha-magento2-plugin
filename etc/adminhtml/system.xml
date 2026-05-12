@@ -43,7 +43,8 @@
 
                 <field id="secret_key" translate="label" type="obscure" sortOrder="30"
                        showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Secret key (required)</label>
+                    <label>API key (required)</label>
+                    <comment>Previously labeled "Secret Key".</comment>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
 
@@ -91,7 +92,7 @@
 
                 <field id="hide_branding" translate="label" type="select" sortOrder="100"
                        showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Hide branding</label>
+                    <label>White Label / Hide Branding</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
 
@@ -109,7 +110,7 @@
 
                 <field id="mode" translate="label" type="select" sortOrder="130"
                        showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Mode</label>
+                    <label>Minimal Data Mode</label>
                     <source_model>TrustComponent\TrustCaptchaMagento2\Model\Config\Source\Mode</source_model>
                 </field>
 
@@ -121,6 +122,22 @@
                 <field id="custom_design" translate="label" type="textarea" sortOrder="150"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Custom design (JSON)</label>
+                </field>
+
+                <field id="failover_enabled" translate="label comment" type="select" sortOrder="160"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Failover Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[
+                        In the rare event of a TrustCaptcha outage, CAPTCHAs are accepted so your forms keep working — bot protection is skipped only while we're unreachable. Make sure your server can normally reach our API.
+                    ]]></comment>
+                </field>
+
+                <field id="test_connection" translate="label comment" sortOrder="170"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Connection Test</label>
+                    <frontend_model>TrustComponent\TrustCaptchaMagento2\Block\System\Config\Form\Field\TestConnection</frontend_model>
+                    <comment>Checks whether your server can reach the TrustCaptcha API.</comment>
                 </field>
             </group>
 

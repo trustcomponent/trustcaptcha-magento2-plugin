@@ -8,7 +8,7 @@ class Threshold implements OptionSourceInterface
     public function toOptionArray(): array
     {
         $opts = [];
-        for ($i = 0; $i <= 100; $i += 5) {
+        for ($i = 20; $i <= 100; $i += 5) {
             $v = number_format($i / 100, 2, '.', '');
             $opts[] = ['value' => $v, 'label' => $v];
         }

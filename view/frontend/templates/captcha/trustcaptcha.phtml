@@ -10,18 +10,25 @@ if (!$cfg->isEnabled() || !$siteKey) {
 <trustcaptcha-component
         sitekey="<?= $this->escapeHtmlAttr($siteKey) ?>"
     <?php if ($cfg->getLicenseKey() !== ''): ?>
-        license="<?= $this->escapeHtmlAttr($cfg->getLicenseKey()) ?>"
+        license-key="<?= $this->escapeHtmlAttr($cfg->getLicenseKey()) ?>"
     <?php endif; ?>
-        width="<?= $this->escapeHtmlAttr($cfg->getWidth()) ?>"
+    <?php if ($cfg->getWidth() === 'full'): ?>
+        full-width="true"
+    <?php endif; ?>
         language="<?= $this->escapeHtmlAttr($cfg->getLanguage()) ?>"
         theme="<?= $this->escapeHtmlAttr($cfg->getTheme()) ?>"
-        mode="<?= $this->escapeHtmlAttr($cfg->getMode()) ?>"
+    <?php if ($cfg->getMode() === 'minimal'): ?>
+        minimal-data-mode="true"
+    <?php endif; ?>
+    <?php if ($cfg->getPrivacyUrl() !== ''): ?>
         privacy-url="<?= $this->escapeUrl($cfg->getPrivacyUrl()) ?>"
+    <?php endif; ?>
         invisible-hint="<?= $this->escapeHtmlAttr($cfg->getInvisibleHint()) ?>"
-        <?php if ($cfg->isInvisible()): ?>invisible<?php endif; ?>
-        <?php if ($cfg->isHideBranding()): ?>hide-branding<?php endif; ?>
+        <?php if ($cfg->isInvisible()): ?>invisible="true"<?php endif; ?>
+        <?php if ($cfg->isHideBranding()): ?>white-label="true"<?php endif; ?>
+        <?php if ($cfg->isFailoverEnabled()): ?>failover-enabled="true"<?php endif; ?>
         token-field-name="captcha[<?= $this->escapeHtmlAttr($formId) ?>]"
-        <?php if ($cfg->isAutostart() === false): ?>autostart="false"<?php else: ?>autostart<?php endif; ?>
+        <?php if ($cfg->isAutostart() === false): ?>autostart-disabled="true"<?php endif; ?>
         framework="magento2"
 ></trustcaptcha-component>
 <?php
@@ -34,10 +41,10 @@ if ($customTranslations || $customDesign):
             var el = document.currentScript.previousElementSibling;
             if (!el || el.tagName.toLowerCase() !== 'trustcaptcha-component') return;
             <?php if ($customTranslations): ?>
-            try { el.setAttribute('custom-translations', <?= /* @noEscape */ json_encode($customTranslations, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>); } catch(e){}
+            try { el.setAttribute('translations', <?= /* @noEscape */ json_encode($customTranslations, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>); } catch(e){}
             <?php endif; ?>
             <?php if ($customDesign): ?>
-            try { el.setAttribute('custom-design', <?= /* @noEscape */ json_encode($customDesign, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>); } catch(e){}
+            try { el.setAttribute('design', <?= /* @noEscape */ json_encode($customDesign, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>); } catch(e){}
             <?php endif; ?>
         })();
     </script>
